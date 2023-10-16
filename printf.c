@@ -14,6 +14,7 @@ int _printf(const char *format, ...)
 	int len = 0;
 	char *str;
 	int count = 0;
+	int character;
 
 	if (format == NULL)
 	{
@@ -32,8 +33,11 @@ int _printf(const char *format, ...)
 		{
 			format++;
 		}
+		if (*format == '\0')
+			break;
 		if (*format == 'c')
 		{
+			character = va_arg(args, int);
 			write(1, format, 1);
 			count++;
 		}
@@ -42,6 +46,7 @@ int _printf(const char *format, ...)
 
 		if (*format == 's')
 		{
+			str = va_arg(args, char *);
 			while (str[len])
 			{
 				len++;
