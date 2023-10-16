@@ -1,7 +1,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include "main.h"
-
+#include <unistd.h>
 /**
  * _printf - Printf function
  * @format: format
@@ -12,7 +12,7 @@ int _printf(const char *format, ...)
 {
 	va_list args;
 	int count = 0;
-	int character;
+	int character, len = 0;
 	char *str;
 
 	va_start(args, format);
@@ -28,28 +28,28 @@ int _printf(const char *format, ...)
 			if (*format == 'c')
 			{
 				character = va_arg(args, int);
-				putchar(character);
+				write(1, &character, 1);
 				count++;
 			}
 			else if (*format == 's')
 			{
 				str = va_arg(args, char *);
-				while (*str)
+				while (str[len])
 				{
-					putchar(*str);
-					str++;
-					count++;
+					len++;
+					write(1, str, len);
+					count += len;
 				}
 			}
 			else if (*format == '%')
 			{
-				putchar('%');
+				write(1, "%", 1);
 				count++;
 			}
 		}
 		else
 		{
-			putchar(*format);
+			write(1, format, 1);
 			count++;
 		}
 		format++;
