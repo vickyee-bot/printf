@@ -13,6 +13,7 @@ int _printf(const char *format, ...)
 	va_list args;
 	int count = 0;
 	char specifier;
+	int len = 0;
 
 	va_start(args, format);
 
@@ -43,6 +44,19 @@ int _printf(const char *format, ...)
 		{
 			write(1, "%", 1);
 			count++;
+		}
+		else if (specifier == 'd' || specifier == 'i')
+		{
+			int num = va_arg(args, int);
+			char num_str[20];
+			sprintf(num_str, "%d", num);
+			len = 0;
+			while (num_str[len] != '\0')
+			{
+				len++;
+			}
+			write(1, num_str, len);
+			count += len;
 		}
 		}
 		else
