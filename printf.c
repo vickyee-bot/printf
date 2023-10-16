@@ -14,7 +14,6 @@ int _printf(const char *format, ...)
 	int len = 0;
 	char *str;
 	int count = 0;
-	int character;
 
 	if (format == NULL)
 	{
@@ -37,8 +36,8 @@ int _printf(const char *format, ...)
 			break;
 		if (*format == 'c')
 		{
-			character = va_arg(args, int);
-			write(1, format, 1);
+			int character = va_arg(args, int);
+			write(1, &character, 1);
 			count++;
 		}
 
