@@ -42,6 +42,10 @@ int _printf(const char *format, ...)
 				write(1, str, len);
 			}
 		}
+		if (*format == '%')
+		{
+			write(1, format, 1);
+		}
 	}
 	va_end(args);
 	return (count);
