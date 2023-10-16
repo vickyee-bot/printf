@@ -14,6 +14,7 @@ int _printf(const char *format, ...)
 	int count = 0;
 	char specifier;
 	int len = 0;
+	int i;
 
 	va_start(args, format);
 
@@ -57,6 +58,20 @@ int _printf(const char *format, ...)
 			}
 			write(1, num_str, len);
 			count += len;
+		}
+		else if (specifier == 'b')
+		{
+			unsigned int num = va_arg(args, unsigned int);
+			char binary_str[33];
+			binary_str[32] = '\0';
+
+			for (i = 31; i >= 0; i--)
+			{
+				binary_str[i] = (num & 1) ? '1' : '0';
+				num >>= 1;
+			}
+			write(1, binary_str, 32);
+			count += 32;
 		}
 		}
 		else
