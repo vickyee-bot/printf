@@ -1,40 +1,59 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include "main.h"
-#define BUFF_SIZE 1024
 
-void print_buffer(char buffer[], int *buff_ind);
 /**
  * _printf - Printf function
- * @format: format.
+ * @format: format
+ *
  * Return: Printed chars.
  */
-int _printf(const char *format, ...) {
-    int printed_chars = 0;
-    int buff_ind = 0;
-    char buffer[BUFF_SIZE];
-    va_list args;
-    int i;
+int _printf(const char *format, ...)
+{
+	va_list args;
+	int count = 0;
+	int character;
+	char *str;
 
-    if (format == NULL)
-        return -1;
+	va_start(args, format);
 
-    va_start(args, format);
+	while (*format)
+	{
+		if (*format == '%')
+		{
+			format++;
+			if (*format == '\0')
+				break;
 
-    for (i = 0; format[i] != '\0'; i++) {
-        if (format[i] != '%') {
-            buffer[buff_ind++] = format[i];
-            if (buff_ind == BUFF_SIZE)
-                print_buffer(buffer, &buff_ind);
-            printed_chars++;
-        } else {
-            print_buffer(buffer, &buff_ind);
-        }
-    }
-
-    print_buffer(buffer, &buff_ind);
-
-    va_end(args);
-
-    return printed_chars;
+			if (*format == 'c')
+			{
+				character = va_arg(args, int);
+				putchar(character);
+				count++;
+			}
+			else if (*format == 's')
+			{
+				str = va_arg(args, char *);
+				while (*str)
+				{
+					putchar(*str);
+					str++;
+					count++;
+				}
+			}
+			else if (*format == '%')
+			{
+				putchar('%');
+				count++;
+			}
+		}
+		else
+		{
+			putchar(*format);
+			count++;
+		}
+		format++;
+	}
+	va_end(args);
+	return (count);
 }
