@@ -34,6 +34,7 @@ int _printf(const char *format, ...)
 			format++;
 		if (*format == '\0')
 			break;
+
 		if (*format == 'c')
 		{
 			int character = va_arg(args, int);
