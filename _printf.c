@@ -73,6 +73,45 @@ int _printf(const char *format, ...)
 			write(1, binary_str, 32);
 			count += 32;
 		}
+		else if (specifier == 'u')
+		{
+			unsigned int num = va_arg(args, unsigned int);
+			char num_str[20];
+			sprintf(num_str, "%u", num);
+			len = 0;
+			while (num_str[len] != '\0')
+			{
+				len++;
+			}
+			write(1, num_str, len);
+			count += len;
+		}
+		else if (specifier == 'o')
+		{
+			unsigned int num = va_arg(args, unsigned int);
+			char num_str[20];
+			sprintf(num_str, "%o", num);
+			len = 0;
+			while (num_str[len] != '\0')
+			{
+				len++;
+			}
+			write(1, num_str, len);
+			count += len;
+		}
+		else if (specifier == 'x' || specifier == 'X')
+		{
+			unsigned int num = va_arg(args, unsigned int);
+			char num_str[20];
+			sprintf(num_str, (specifier == 'x') ? "%x" : "%X", num);
+			len = 0;
+			while (num_str[len] != '\0')
+			{
+				len++;
+			}
+			write(1, num_str, len);
+			count += len;
+		}
 		}
 		else
 		{
